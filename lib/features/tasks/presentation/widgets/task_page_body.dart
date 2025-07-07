@@ -1,3 +1,4 @@
+import 'package:errand_buddy/core/constants/app_colors.dart';
 import 'package:errand_buddy/features/tasks/presentation/bloc/task_bloc.dart';
 import 'package:errand_buddy/features/tasks/presentation/bloc/task_event.dart';
 import 'package:errand_buddy/features/tasks/presentation/bloc/task_state.dart';
@@ -15,7 +16,7 @@ class TaskScreenBody extends StatelessWidget {
         if (state is TaskLoading) {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4A90E2)),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
             ),
           );
         } else if (state is TaskError) {

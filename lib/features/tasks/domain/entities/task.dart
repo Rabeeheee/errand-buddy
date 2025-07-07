@@ -4,7 +4,6 @@ import '../../../../core/utils/priority_utils.dart';
 class Task extends Equatable {
   final String id;
   final String title;
-  final String description;
   final String assignedTo;
   final String assignedToName;
   final TaskPriority priority;
@@ -17,7 +16,6 @@ class Task extends Equatable {
   const Task({
     required this.id,
     required this.title,
-    required this.description,
     required this.assignedTo,
     required this.assignedToName,
     required this.priority,
@@ -44,7 +42,6 @@ class Task extends Equatable {
     return Task(
       id: id ?? this.id,
       title: title ?? this.title,
-      description: description ?? this.description,
       assignedTo: assignedTo ?? this.assignedTo,
       assignedToName: assignedToName ?? this.assignedToName,
       priority: priority ?? this.priority,
@@ -62,7 +59,6 @@ class Task extends Equatable {
   List<Object?> get props => [
         id,
         title,
-        description,
         assignedTo,
         assignedToName,
         priority,
