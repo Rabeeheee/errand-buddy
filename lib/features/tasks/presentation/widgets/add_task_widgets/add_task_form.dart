@@ -1,4 +1,3 @@
-// add_task_form.dart
 import 'package:errand_buddy/core/utils/cloudinary_helper.dart';
 import 'package:errand_buddy/features/tasks/presentation/bloc/task_event.dart';
 import 'package:errand_buddy/features/tasks/presentation/widgets/add_task_widgets/add_title_input.dart';
@@ -6,7 +5,6 @@ import 'package:errand_buddy/features/tasks/presentation/widgets/add_task_widget
 import 'package:errand_buddy/features/tasks/presentation/widgets/add_task_widgets/due_date_selector.dart';
 import 'package:errand_buddy/features/tasks/presentation/widgets/add_task_widgets/priority_selector.dart';
 import 'package:errand_buddy/features/tasks/presentation/widgets/add_task_widgets/task_image_picker.dart';
-import 'package:errand_buddy/features/tasks/presentation/widgets/add_task_widgets/add_task_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:errand_buddy/features/tasks/domain/entities/task.dart';
@@ -96,12 +94,40 @@ class _AddTaskFormState extends State<AddTaskForm> {
               ),
             ),
           ),
-          AddTaskButton(
-            isUploading: _isUploading,
-            canSubmit: _canSubmit(),
-            onPressed: _submitTask,
-          ),
+          _buildAddTaskButton(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAddTaskButton() {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.all(16),
+      height: 50,
+      child: ElevatedButton(
+        onPressed: (_canSubmit() && !_isUploading) ? _submitTask : _validateFields,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF4A90E2),
+          disabledBackgroundColor: const Color(0xFF4A90E2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          elevation: 0,
+        ),
+        child: _isUploading
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 2,
+              )
+            : const Text(
+                'Add Task',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
       ),
     );
   }
@@ -115,13 +141,13 @@ class _AddTaskFormState extends State<AddTaskForm> {
   }
 
   void _submitTask() async {
-    if (!_formKey.currentState!.validate()) {
-      _showValidationMessage('Please fill in all required fields correctly.');
+    // Check for empty fields and show specific snackbar messages
+    if (!_validateFields()) {
       return;
     }
 
-    if (!_canSubmit()) {
-      _showValidationMessage('Please complete all required fields: Title, Assignee, Due Date, Priority, and Image.');
+    if (!_formKey.currentState!.validate()) {
+      _showSnackBar('Validation Error', 'Please fill in all required fields correctly.');
       return;
     }
 
@@ -185,11 +211,46 @@ class _AddTaskFormState extends State<AddTaskForm> {
     }
   }
 
-  void _showValidationMessage(String message) {
+  bool _validateFields() {
+    if (_titleController.text.trim().isEmpty) {
+      _showSnackBar('Missing Title', 'Please enter a task title.');
+      return false;
+    }
+
+    if (_selectedImage == null) {
+      _showSnackBar('Missing Image', 'Please select an image for the task.');
+      return false;
+    }
+
+    if (_selectedPriority == null) {
+      _showSnackBar('Missing Priority', 'Please select a priority level.');
+      return false;
+    }
+
+    if (_selectedAssigneeId == null) {
+      _showSnackBar('Missing Assignee', 'Please select who will be assigned to this task.');
+      return false;
+    }
+
+    if (_selectedDueDate == null) {
+      _showSnackBar('Missing Due Date', 'Please select a due date for the task.');
+      return false;
+    }
+
+    return true;
+  }
+
+  void _showSnackBar(String title, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.orange,
+        content: Text(
+          '$title: $message',
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: Colors.red,
         duration: const Duration(seconds: 3),
       ),
     );
