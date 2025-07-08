@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:errand_buddy/features/tasks/presentation/widgets/custom_bottom_nav_bar.dart';
+import 'package:errand_buddy/core/widgets/custom_bottom_nav_bar.dart';
 import 'package:errand_buddy/features/tasks/presentation/pages/tasks_page.dart';
 import 'package:errand_buddy/features/members/presentation/pages/member_page.dart';
 import 'package:errand_buddy/features/escalation/presentation/pages/escalation_page.dart';
 import 'package:errand_buddy/features/profile/presentation/pages/profile_page.dart';
-import 'package:go_router/go_router.dart'; // Add this import
+import 'package:go_router/go_router.dart';
 
 class MainWrapper extends StatefulWidget {
   final int initialIndex;
@@ -32,8 +32,16 @@ class _MainWrapperState extends State<MainWrapper> {
   final List<String> _titles = [
     'Members',
     'Tasks',
-    'Escalations',
+    'Escalations Logs',
     'Profile',
+  ];
+
+  // Define which screens should show the back arrow
+  final List<bool> _showBackArrow = [
+    true,  
+    false, 
+    true,  
+    false,
   ];
 
   @override
@@ -76,6 +84,20 @@ class _MainWrapperState extends State<MainWrapper> {
       backgroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
+      leading: _showBackArrow[_currentIndex] 
+        ? IconButton(
+            onPressed: () {
+              // Handle back navigation
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                // If can't pop, navigate to a default screen (e.g., Tasks)
+                _onBottomNavTap(1);
+              }
+            }, 
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+          )
+        : null,
       title: Text(
         _titles[_currentIndex],
         style: const TextStyle(

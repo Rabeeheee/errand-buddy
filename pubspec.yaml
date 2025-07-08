@@ -34,25 +34,44 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  # To add iOS-style icons (like back, share, settings) so your app feels polished on iPhones too.
+
   firebase_auth: ^5.6.2
+  # To let users sign up / log in securely (with email, Google, etc.) — so each user can have their own data and tasks.
   firebase_core: ^3.15.1
+  # It connects your Flutter app to Firebase services like Firestore and Auth — works as the bridge.
   equatable: ^2.0.7
+  # To compare objects easily (like two tasks) by value instead of memory — helps in BLoC and state updates.
   dartz: ^0.10.1
+  # To handle errors and optional data cleanly (like saying: “get tasks might fail, so let’s handle both success and failure properly”).
   injectable: ^2.5.0
+  # To auto-generate code for dependency injection, keeping your project clean, testable, and easy to change later.
   get_it: ^8.0.3
+  # Works like a global box: anywhere in your app, you can say “give me my TaskRepository” without passing it manually.
   bloc: ^9.0.0
+  # Helps you control app logic and separate UI from business logic (ex: load tasks, filter tasks, update tasks).
   go_router: ^16.0.0
+  # To move between pages/screens (like Home → Task Details → Escalation Page) with simple route configs.
   intl: ^0.20.2
+  # To format dates (“Due today”, “2025-07-07”) and times in user-friendly ways.
   cloud_firestore: ^5.6.11
+  # To store and read your app data (tasks, members, escalation logs) from Google’s cloud database in real time.
   flutter_bloc: ^9.1.1
+  # To connect your BLoC classes with the Flutter UI so that UI updates automatically when data changes.
   internet_connection_checker: ^3.0.1
+  # To check if the user’s device is online or offline and show messages like “No internet connection”.
   google_fonts: ^6.2.1
-  flutter_native_splash: ^2.4.6
+  # To use nicer fonts (e.g., Plus Jakarta Sans) instead of default system fonts so your app looks modern.
   shared_preferences: ^2.5.3
+  # To save small data locally (like user’s theme, last selected assignee, or onboarding seen flag).
   iconify_flutter: ^0.0.7
+  # To use thousands of vector icons easily in your UI.
   image_picker: ^1.1.2
+  # To let users pick images from camera/gallery (e.g., upload task images).
   uuid: ^4.5.1
+  # To create unique IDs for tasks and users (like task-7af8d3d).
   cached_network_image: ^3.4.1
+  # To load and cache network images (like member avatars or task images) so they load faster next time.
 
 dev_dependencies:
   flutter_test:

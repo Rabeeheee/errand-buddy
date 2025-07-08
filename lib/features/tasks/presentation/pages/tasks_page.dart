@@ -1,6 +1,8 @@
+//APP PACKAGES
 import 'package:errand_buddy/features/tasks/presentation/bloc/task_bloc.dart';
 import 'package:errand_buddy/features/tasks/presentation/bloc/task_event.dart';
 import 'package:errand_buddy/features/tasks/presentation/widgets/task_page_body.dart';
+//IMPORTED PACKAGES
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +25,7 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      //TASK BODY
       body: const TaskScreenBody(),
     );
   }

@@ -29,8 +29,10 @@ class _SplashPageState extends State<SplashPage> {
       final isOnboardingCompleted = await OnboardingService.isOnboardingCompleted();
       
       if (isOnboardingCompleted) {
+        // ignore: use_build_context_synchronously
         context.go('/tasks');
       } else {
+        // ignore: use_build_context_synchronously
         context.go('/onboarding');
       }
     }

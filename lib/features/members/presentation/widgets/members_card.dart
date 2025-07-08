@@ -51,13 +51,14 @@ Widget build(BuildContext context) {
           ),
           const SizedBox(height: 4),
           _buildStatRow(
-            label: 'Completed',
-            count: stats.completedTaskCount,
-          ),
-          const SizedBox(height: 4),
-          _buildStatRow(
             label: 'Overdue',
             count: stats.overdueTaskCount,
+          ),
+          const SizedBox(height: 4),
+          
+           _buildStatRow(
+            label: 'Completed',
+            count: stats.completedTaskCount,
           ),
         ],
       ),

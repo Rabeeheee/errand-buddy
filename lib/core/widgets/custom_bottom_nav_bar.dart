@@ -17,7 +17,7 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 90,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -47,7 +47,7 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           _buildNavItem(
             icon: const Iconify(Entypo.back_in_time),
-            label: 'Escalations',
+            label: 'Escalation',
             isSelected: currentIndex == 2,
             onTap: () => onTap(2),
           ),

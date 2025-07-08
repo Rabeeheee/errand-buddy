@@ -1,10 +1,13 @@
+//IMPORTED PACKAGES
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//APP PACKAGES
 import 'package:errand_buddy/features/members/presentation/bloc/member_bloc.dart';
 import 'package:errand_buddy/features/members/presentation/bloc/member_event.dart';
 import 'package:errand_buddy/features/members/presentation/widgets/members_view.dart';
 import 'package:errand_buddy/features/tasks/data/datasources/task_remote_data_source.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 
 class MembersPage extends StatelessWidget {
@@ -18,6 +21,7 @@ class MembersPage extends StatelessWidget {
           firestore: FirebaseFirestore.instance,
         ),
       )..add(LoadMembers()),
+      //SHOW MEMBERS
       child: const MembersView(),
     );
   }
