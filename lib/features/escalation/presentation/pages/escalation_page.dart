@@ -70,7 +70,6 @@ class EscalationPage extends StatelessWidget {
   }
 
   Widget _buildContent(List<Task> tasks) {
-    final memberStats = _calculateMemberStatistics(tasks);
     final escalatedTasks = _getEscalatedTasks(tasks);
 
     return SingleChildScrollView(
@@ -84,31 +83,7 @@ class EscalationPage extends StatelessWidget {
     );
   }
 
-  Map<String, Map<String, int>> _calculateMemberStatistics(List<Task> tasks) {
-    final Map<String, Map<String, int>> memberStats = {};
-    
-    for (final task in tasks) {
-      final assigneeName = task.assignedToName;
-      
-      if (!memberStats.containsKey(assigneeName)) {
-        memberStats[assigneeName] = {
-          'total': 0,
-          'completed': 0,
-          'overdue': 0,
-        };
-      }
-      
-      memberStats[assigneeName]!['total'] = memberStats[assigneeName]!['total']! + 1;
-      
-      if (task.isCompleted) {
-        memberStats[assigneeName]!['completed'] = memberStats[assigneeName]!['completed']! + 1;
-      } else if (task.isOverdue) {
-        memberStats[assigneeName]!['overdue'] = memberStats[assigneeName]!['overdue']! + 1;
-      }
-    }
-    
-    return memberStats;
-  }
+  
 
   List<Task> _getEscalatedTasks(List<Task> tasks) {
     return tasks.where((task) => task.isOverdue).toList()
