@@ -1,8 +1,9 @@
-part of 'member_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-sealed class MemberEvent extends Equatable {
-  const MemberEvent();
-
+abstract class MembersEvent extends Equatable {
+  const MembersEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
+
+class LoadMembers extends MembersEvent {}

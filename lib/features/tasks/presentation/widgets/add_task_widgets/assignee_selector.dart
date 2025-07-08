@@ -1,6 +1,8 @@
+import 'package:errand_buddy/features/tasks/data/model/assigne_model.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AssigneeSelector extends StatelessWidget {
+class AssigneeSelector extends StatefulWidget {
   final String? selectedAssigneeId;
   final String? selectedAssigneeName;
   final Function(String, String) onAssigneeSelected;
@@ -12,74 +14,76 @@ class AssigneeSelector extends StatelessWidget {
     required this.onAssigneeSelected,
   }) : super(key: key);
 
-  final List<Map<String, String>> _assignees = const [
-    {'id': '1', 'name': 'John Doe', 'avatar': 'https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png'},
-    {'id': '2', 'name': 'Jane Smith', 'avatar': 'https://www.google.com/search?q=user+avatar+image&udm=2&sxsrf=AE3TifPqYhbZ8TQvQar7IoKXH41Vabk-rA%3A1751906477971#vhid=46rvAq-TUHLySM&vssid=mosaic'},
-    {'id': '3', 'name': 'Mike Johnson', 'avatar': 'https://cdn-icons-png.flaticon.com/512/219/219969.png'},
-  ];
+  @override
+  State<AssigneeSelector> createState() => _AssigneeSelectorState();
+}
+
+class _AssigneeSelectorState extends State<AssigneeSelector> {
+  List<AssigneeModel> _assignees = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAssignees();
+  }
+
+  Future<void> _loadAssignees() async {
+    final querySnapshot = await FirebaseFirestore.instance.collection('assignees').get();
+    setState(() {
+      _assignees = querySnapshot.docs.map((doc) => AssigneeModel.fromFirestore(doc)).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Assignee',
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF5F5F5),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            widget.selectedAssigneeName ?? 'Assignee',
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: _assignees.map((assignee) {
-              final isSelected = selectedAssigneeId == assignee['id'];
-              return _buildAssigneeAvatar(
-                assignee['id']!,
-                assignee['name']!,
-                assignee['avatar']!,
-                isSelected,
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAssigneeAvatar(String id, String name, String avatar, bool isSelected) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 12),
-      child: GestureDetector(
-        onTap: () => onAssigneeSelected(id, name),
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: isSelected
-                ? Border.all(color: const Color(0xFF4A90E2), width: 3)
-                : null,
-          ),
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.grey[300],
-            child: Text(
-              name.split(' ').map((e) => e[0]).join().toUpperCase(),
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
+              color: widget.selectedAssigneeName != null ? Colors.black87 : Colors.black,
+              fontWeight: widget.selectedAssigneeName != null ? FontWeight.w500 : FontWeight.normal,
             ),
           ),
         ),
-      ),
+        const SizedBox(height: 16),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: _assignees.map((assignee) {
+              final isSelected = widget.selectedAssigneeId == assignee.id;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: GestureDetector(
+                  onTap: () => widget.onAssigneeSelected(assignee.id, assignee.name),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: isSelected
+                          ? Border.all(color: const Color(0xFF4A90E2), width: 3)
+                          : Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: CircleAvatar(
+                      radius: 22,
+                      backgroundColor: Colors.grey[300],
+                      backgroundImage: AssetImage(assignee.avatar),
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
     );
   }
 }

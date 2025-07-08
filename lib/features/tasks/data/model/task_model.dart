@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/task.dart';
-import '../../../../core/utils/priority_utils.dart';
 
 class TaskModel extends Task {
   const TaskModel({
@@ -14,8 +13,10 @@ class TaskModel extends Task {
     required super.createdAt,
     required super.updatedAt,
     required super.escalationCount,
+    super.imageUrl,
   });
-  
+
+  // Factory constructor to create TaskModel from Firestore
   factory TaskModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return TaskModel(
@@ -23,15 +24,17 @@ class TaskModel extends Task {
       title: data['title'] ?? '',
       assignedTo: data['assignedTo'] ?? '',
       assignedToName: data['assignedToName'] ?? '',
-      priority: PriorityUtils.getPriorityFromString(data['priority'] ?? 'low'),
+      priority: data['priority'],
       dueDate: (data['dueDate'] as Timestamp).toDate(),
       isCompleted: data['isCompleted'] ?? false,
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       updatedAt: (data['updatedAt'] as Timestamp).toDate(),
       escalationCount: data['escalationCount'] ?? 0,
+      imageUrl: data['imageUrl'], 
     );
   }
-  
+
+  // Factory constructor to copy from Task entity
   factory TaskModel.fromTask(Task task) {
     return TaskModel(
       id: task.id,
@@ -44,20 +47,23 @@ class TaskModel extends Task {
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
       escalationCount: task.escalationCount,
+      imageUrl: task.imageUrl, 
     );
   }
-  
+
+  // Convert to Firestore format
   Map<String, dynamic> toFirestore() {
     return {
       'title': title,
       'assignedTo': assignedTo,
       'assignedToName': assignedToName,
-      'priority': PriorityUtils.getPriorityString(priority),
+      'priority': priority,
       'dueDate': Timestamp.fromDate(dueDate),
       'isCompleted': isCompleted,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
       'escalationCount': escalationCount,
+      'imageUrl': imageUrl, 
     };
   }
 }

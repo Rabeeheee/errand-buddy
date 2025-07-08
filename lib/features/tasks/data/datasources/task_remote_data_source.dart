@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:errand_buddy/features/tasks/data/model/assigne_model.dart';
 import 'package:errand_buddy/features/tasks/data/model/task_model.dart';
 
 abstract class TaskRemoteDataSource {
@@ -9,12 +10,32 @@ abstract class TaskRemoteDataSource {
   Future<void> deleteTask(String id);
   Future<List<TaskModel>> getTasksByAssignee(String assigneeId);
   Future<List<TaskModel>> getOverdueTasks();
+    Future<List<AssigneeModel>> getAllAssignees();
+
 }
 
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   final FirebaseFirestore firestore;
   
   TaskRemoteDataSourceImpl({required this.firestore});
+
+  @override
+  Future<List<AssigneeModel>> getAllAssignees() async {
+    try {
+      final querySnapshot = await firestore.collection('assignees').get();
+      return querySnapshot.docs.map((doc) => AssigneeModel.fromFirestore(doc)).toList();
+    } catch (e) {
+      throw Exception('Failed to get assignees: $e');
+    }
+  }
+
+  Future<void> addAssignee(AssigneeModel assignee) async {
+    try {
+      await firestore.collection('assignees').add(assignee.toFirestore());
+    } catch (e) {
+      throw Exception('Failed to add assignee: $e');
+    }
+  }
   
   @override
   Future<List<TaskModel>> getAllTasks() async {

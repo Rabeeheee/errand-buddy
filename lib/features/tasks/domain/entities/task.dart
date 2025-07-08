@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
-import '../../../../core/utils/priority_utils.dart';
 
 class Task extends Equatable {
   final String id;
   final String title;
   final String assignedTo;
   final String assignedToName;
-  final TaskPriority priority;
+  final String? priority;
   final DateTime dueDate;
   final bool isCompleted;
   final DateTime createdAt;
   final DateTime updatedAt;
   final int escalationCount;
-  
+  final String? imageUrl;  
+
   const Task({
     required this.id,
     required this.title,
@@ -24,20 +24,22 @@ class Task extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.escalationCount,
+    this.imageUrl, 
   });
-  
+
   Task copyWith({
     String? id,
     String? title,
     String? description,
     String? assignedTo,
     String? assignedToName,
-    TaskPriority? priority,
+    String? priority,
     DateTime? dueDate,
     bool? isCompleted,
     DateTime? createdAt,
     DateTime? updatedAt,
     int? escalationCount,
+    String? imageUrl, 
   }) {
     return Task(
       id: id ?? this.id,
@@ -50,11 +52,12 @@ class Task extends Equatable {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       escalationCount: escalationCount ?? this.escalationCount,
+      imageUrl: imageUrl ?? this.imageUrl, 
     );
   }
-  
+
   bool get isOverdue => DateTime.now().isAfter(dueDate) && !isCompleted;
-  
+
   @override
   List<Object?> get props => [
         id,
@@ -67,5 +70,6 @@ class Task extends Equatable {
         createdAt,
         updatedAt,
         escalationCount,
+        imageUrl, 
       ];
 }
