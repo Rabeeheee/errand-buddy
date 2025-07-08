@@ -56,7 +56,7 @@ class MembersView extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  childAspectRatio: 0.8,
+                  childAspectRatio: 0.9,
                 ),
                 itemCount: state.membersWithStats.length,
                 itemBuilder: (context, index) {
