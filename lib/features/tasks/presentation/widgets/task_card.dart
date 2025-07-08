@@ -1,6 +1,6 @@
 import 'package:errand_buddy/core/utils/priority_utils.dart';
 import 'package:errand_buddy/features/tasks/domain/entities/task.dart';
-import 'package:errand_buddy/features/tasks/presentation/widgets/task_details_dialouge.dart';
+// import 'package:errand_buddy/features/tasks/presentation/widgets/task_details_dialouge.dart';
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatelessWidget {
@@ -186,9 +186,9 @@ class TaskCard extends StatelessWidget {
   }
 
   void _showTaskDetails(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => TaskDetailsDialog(task: task),
-    );
+    // showDialog(
+    //   context: context,
+    //   // builder: (context) => TaskDetailsDialog(task: task),
+    // );
   }
 }

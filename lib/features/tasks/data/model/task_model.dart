@@ -6,7 +6,6 @@ class TaskModel extends Task {
   const TaskModel({
     required super.id,
     required super.title,
-    required super.description,
     required super.assignedTo,
     required super.assignedToName,
     required super.priority,
@@ -22,7 +21,6 @@ class TaskModel extends Task {
     return TaskModel(
       id: doc.id,
       title: data['title'] ?? '',
-      description: data['description'] ?? '',
       assignedTo: data['assignedTo'] ?? '',
       assignedToName: data['assignedToName'] ?? '',
       priority: PriorityUtils.getPriorityFromString(data['priority'] ?? 'low'),
@@ -38,7 +36,6 @@ class TaskModel extends Task {
     return TaskModel(
       id: task.id,
       title: task.title,
-      description: task.description,
       assignedTo: task.assignedTo,
       assignedToName: task.assignedToName,
       priority: task.priority,
@@ -53,7 +50,6 @@ class TaskModel extends Task {
   Map<String, dynamic> toFirestore() {
     return {
       'title': title,
-      'description': description,
       'assignedTo': assignedTo,
       'assignedToName': assignedToName,
       'priority': PriorityUtils.getPriorityString(priority),
