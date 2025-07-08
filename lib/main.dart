@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:errand_buddy/features/escalation/presentation/bloc/escalation_bloc.dart';
+import 'package:errand_buddy/features/members/presentation/bloc/member_bloc.dart';
+import 'package:errand_buddy/features/tasks/data/datasources/task_remote_data_source.dart';
+import 'package:errand_buddy/features/tasks/data/model/assigne_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +14,31 @@ import 'features/tasks/presentation/bloc/task_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await di.init();
+
+  // 👉 Add initial assignees only once (safe to keep, will skip if already exists)
+  final firestore = FirebaseFirestore.instance;
+  final assigneeDataSource = TaskRemoteDataSourceImpl(firestore: firestore);
+
+  final existingAssignees = await assigneeDataSource.getAllAssignees();
+  if (existingAssignees.isEmpty) {
+    final assignees = [
+      AssigneeModel(id: '1', name: 'Eve', avatar: 'assets/images/assignee1.png'),
+      AssigneeModel(id: '2', name: 'Jane', avatar: 'assets/images/assignee2.png'),
+      AssigneeModel(id: '3', name: 'John', avatar: 'assets/images/assignee3.png'),
+    ];
+    for (final assignee in assignees) {
+      await assigneeDataSource.addAssignee(assignee);
+    }
+    debugPrint('Initial assignees added to Firestore');
+  } else {
+    debugPrint('Assignees already exist, skip adding');
+  }
+
   runApp(const ErrandBuddyApp());
 }
+
 
 class ErrandBuddyApp extends StatelessWidget {
   const ErrandBuddyApp({super.key});
@@ -22,8 +48,8 @@ class ErrandBuddyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => di.sl<TaskBloc>()),
-        // BlocProvider(create: (_) => di.sl<MemberBloc>()),
-        // BlocProvider(create: (_) => di.sl<EscalationBloc>()),
+        BlocProvider(create: (_) => di.sl<MembersBloc>()),
+        BlocProvider(create: (_) => di.sl<EscalationBloc>()),
       ],
       child: MaterialApp.router(
         theme: ThemeData(

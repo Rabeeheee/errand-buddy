@@ -14,7 +14,7 @@ class AssigneeModel {
   factory AssigneeModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return AssigneeModel(
-      id: doc.id,
+      id: doc.id, // doc.id is always non-null
       name: data['name'] ?? '',
       avatar: data['avatar'] ?? '',
     );
