@@ -18,7 +18,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   final FirebaseFirestore firestore;
   
   TaskRemoteDataSourceImpl({required this.firestore});
-
+//GET ALL ASSIGNEES
   @override
   Future<List<AssigneeModel>> getAllAssignees() async {
     try {
@@ -28,7 +28,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to get assignees: $e');
     }
   }
-
+//ADD ASSIGNEES
   Future<void> addAssignee(AssigneeModel assignee) async {
     try {
       await firestore.collection('assignees').add(assignee.toFirestore());
@@ -36,7 +36,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to add assignee: $e');
     }
   }
-  
+//GET ALL TASKS
   @override
   Future<List<TaskModel>> getAllTasks() async {
     try {
@@ -52,7 +52,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to get tasks: $e');
     }
   }
-  
+//GET TASK BY ID
   @override
   Future<TaskModel> getTaskById(String id) async {
     try {
@@ -65,7 +65,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to get task: $e');
     }
   }
-  
+//CREATE TASK
   @override
   Future<void> createTask(TaskModel task) async {
     try {
@@ -74,7 +74,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to create task: $e');
     }
   }
-  
+//UPDATE TASK
   @override
   Future<void> updateTask(TaskModel task) async {
     try {
@@ -86,7 +86,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to update task: $e');
     }
   }
-  
+//DELETE TASK
   @override
   Future<void> deleteTask(String id) async {
     try {
@@ -95,7 +95,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to delete task: $e');
     }
   }
-  
+//GET TASK BY ASSIGNEE
   @override
   Future<List<TaskModel>> getTasksByAssignee(String assigneeId) async {
     try {
@@ -112,7 +112,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       throw Exception('Failed to get tasks by assignee: $e');
     }
   }
-  
+//GET OVERDUE TASK
   @override
   Future<List<TaskModel>> getOverdueTasks() async {
     try {
