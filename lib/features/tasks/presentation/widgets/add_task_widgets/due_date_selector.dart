@@ -12,57 +12,31 @@ class DueDateSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Due Date',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        
+        GestureDetector(
+          onTap: () => _selectDate(context),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+            decoration: BoxDecoration(
+              color:Color(0xFFF5F5F5),
+              borderRadius: BorderRadius.circular(8),
             ),
-          ),
-          const SizedBox(height: 16),
-          GestureDetector(
-            onTap: () => _selectDate(context),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[300]!),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    selectedDate != null
-                        ? _formatDate(selectedDate!)
-                        : 'Select due date',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: selectedDate != null ? Colors.black87 : Colors.grey[600],
-                    ),
-                  ),
-                  Icon(
-                    Icons.calendar_today,
-                    size: 20,
-                    color: Colors.grey[600],
-                  ),
-                ],
+            child: Text(
+              selectedDate != null
+                  ? _formatDate(selectedDate!)
+                  : 'Due Date',
+              style: TextStyle(
+                fontSize: 14,
+                color: selectedDate != null ? Colors.black87 : Color(0xFF4F7396),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
