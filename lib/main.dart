@@ -24,9 +24,9 @@ void main() async {
   final existingAssignees = await assigneeDataSource.getAllAssignees();
   if (existingAssignees.isEmpty) {
     final assignees = [
-      AssigneeModel(id: '1', name: 'Eve', avatar: 'assets/images/assignee1.png'),
-      AssigneeModel(id: '2', name: 'Jane', avatar: 'assets/images/assignee2.png'),
-      AssigneeModel(id: '3', name: 'John', avatar: 'assets/images/assignee3.png'),
+      AssigneeModel(id: '1', name: 'Liam', avatar: 'assets/images/assignee1.png'),
+      AssigneeModel(id: '2', name: 'Ethan', avatar: 'assets/images/assignee2.png'),
+      AssigneeModel(id: '3', name: 'Sophia', avatar: 'assets/images/assignee3.png'),
     ];
     for (final assignee in assignees) {
       await assigneeDataSource.addAssignee(assignee);

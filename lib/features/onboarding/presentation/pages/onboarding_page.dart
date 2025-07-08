@@ -1,9 +1,11 @@
+//APP PACKAGES
 import 'package:errand_buddy/features/onboarding/data/services/onboarding_service.dart';
 import 'package:errand_buddy/features/onboarding/presentation/widgets/onboarding_content.dart';
 import 'package:errand_buddy/features/onboarding/presentation/widgets/onboarding_indicator.dart';
+import '../../../../core/constants/app_colors.dart';
+//IMPORTED PACKAGES
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
 
 // Define your OnboardingItem
 class OnboardingItem {
@@ -68,7 +70,7 @@ class OnboardingPage extends StatelessWidget {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                itemCount: _items.length + 1, // Add one extra "page"
+                itemCount: _items.length + 1, 
                 onPageChanged: (index) {
                   if (index == _items.length) {
                     // User swiped past the last onboarding page
@@ -94,7 +96,7 @@ class OnboardingPage extends StatelessWidget {
             ),
             //ONBOARDING INDICATOR
             OnboardingIndicator(
-              itemCount: _items.length, // Keep this as _items.length, not +1
+              itemCount: _items.length,
               currentPageNotifier: _currentPage,
             ),
             const SizedBox(height: 24),

@@ -22,7 +22,7 @@ class EscalationLogList extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: escalatedTasks.length,
-          separatorBuilder: (context, index) => const Divider(height: 1),
+          separatorBuilder: (context, index) => const SizedBox(height: 25),
           itemBuilder: (context, index) {
             final task = escalatedTasks[index];
             return EscalationTaskItem(
@@ -36,39 +36,32 @@ class EscalationLogList extends StatelessWidget {
   }
 
   Widget _buildEmptyState() {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.green[50],
-            shape: BoxShape.circle,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          
+          const SizedBox(height: 16),
+          Text(
+            'No Escalated Tasks',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey[700],
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          child: Icon(
-            Icons.check_circle_outline,
-            size: 48,
-            color: Colors.green[400],
+          const SizedBox(height: 8),
+          Text(
+            'Great! All tasks are on track.',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[500],
+            ),
           ),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          'No Escalated Tasks',
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.grey[700],
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Great! All tasks are on track.',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[500],
-          ),
-        ),
-       
-      ],
+         
+        ],
+      ),
     );
   }
 

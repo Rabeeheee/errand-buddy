@@ -61,6 +61,7 @@ class MembersView extends StatelessWidget {
                 itemCount: state.membersWithStats.length,
                 itemBuilder: (context, index) {
                   final memberWithStats = state.membersWithStats[index];
+                  //THE MEMBER CARD
                   return MemberCard(
                     member: memberWithStats.member,
                     stats: memberWithStats.stats,
@@ -69,6 +70,7 @@ class MembersView extends StatelessWidget {
               ),
             );
           }
+          //EMPTY HANDLING
           return const Center(
             child: Text('No members found'),
           );

@@ -52,7 +52,7 @@ class EscalationTaskItem extends StatelessWidget {
     return Text(
       _getOverdueText(overdueHours),
       style: const TextStyle(
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: FontWeight.w600,
       ),
     );
