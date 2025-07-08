@@ -39,6 +39,7 @@ class _AssigneeSelectorState extends State<AssigneeSelector> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Selected assignee name
         Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -56,21 +57,24 @@ class _AssigneeSelectorState extends State<AssigneeSelector> {
           ),
         ),
         const SizedBox(height: 16),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: _assignees.map((assignee) {
+        
+        SizedBox(
+          height: 50, 
+          child: Stack(
+            children: List.generate(_assignees.length, (index) {
+              final assignee = _assignees[index];
               final isSelected = widget.selectedAssigneeId == assignee.id;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
+              
+              return Positioned(
+                left: index * 35, 
                 child: GestureDetector(
                   onTap: () => widget.onAssigneeSelected(assignee.id, assignee.name),
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: isSelected
-                          ? Border.all(color: const Color(0xFF4A90E2), width: 3)
-                          : Border.all(color: Colors.white, width: 2),
+                        ? Border.all(color: const Color(0xFF4A90E2), width: 3)
+                        : Border.all(color: Colors.white, width: 4),
                     ),
                     child: CircleAvatar(
                       radius: 22,
@@ -80,7 +84,7 @@ class _AssigneeSelectorState extends State<AssigneeSelector> {
                   ),
                 ),
               );
-            }).toList(),
+            }),
           ),
         ),
       ],
